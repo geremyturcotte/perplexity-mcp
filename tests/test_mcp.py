@@ -20,6 +20,8 @@ from dotenv import load_dotenv
 from fastmcp import Client
 from fastmcp.client.transports import StreamableHttpTransport
 
+from perplexity.config import MODEL_MAPPINGS
+
 # 加载 .env 文件
 env_path = Path(__file__).parent.parent / ".env"
 load_dotenv(env_path)
@@ -149,8 +151,8 @@ class TestListModels:
 class TestSearchMode:
     """Search 模式测试。"""
 
-    # Search 模式下的前三个可用模型（pro 模式）
-    SEARCH_MODELS = [None, "sonar", "gpt-5.2"]
+    # All available pro models from config
+    SEARCH_MODELS = list(MODEL_MAPPINGS["pro"].keys())
 
     @pytest.mark.asyncio
     @pytest.mark.parametrize("model", SEARCH_MODELS)
@@ -213,8 +215,8 @@ class TestSearchMode:
 class TestResearchMode:
     """Research 模式测试。"""
 
-    # Research 模式下的前三个可用模型（reasoning 模式）
-    RESEARCH_MODELS = [None, "gemini-3.0-pro", "gpt-5.2-thinking"]
+    # All available reasoning models from config
+    RESEARCH_MODELS = list(MODEL_MAPPINGS["reasoning"].keys())
 
     @pytest.mark.asyncio
     @pytest.mark.parametrize("model", RESEARCH_MODELS)

@@ -36,6 +36,7 @@ from .config import (
     ENDPOINT_RATE_LIMIT_STATUS,
     ENDPOINT_SSE_ASK,
     ENDPOINT_UPLOAD_URL,
+    MODEL_MAPPINGS,
     SOCKS_PROXY,
 )
 from .exceptions import ValidationError
@@ -196,12 +197,7 @@ class Client:
         if mode not in valid_modes:
             raise ValidationError(f"Invalid search mode '{mode}'. Choose from: {', '.join(valid_modes)}")
 
-        valid_models = {
-            "auto": [None],
-            "pro": [None, "sonar", "gpt-5.2", "claude-4.5-sonnet", "grok-4.1"],
-            "reasoning": [None, "gpt-5.2-thinking", "claude-4.5-sonnet-thinking", "gemini-3.0-pro", "kimi-k2-thinking", "grok-4.1-reasoning"],
-            "deep research": [None],
-        }
+        valid_models = {mode: list(mapping.keys()) for mode, mapping in MODEL_MAPPINGS.items()}
         if self.own and model not in valid_models[mode]:
             raise ValidationError(f"Invalid model '{model}' for mode '{mode}'.")
 
@@ -280,25 +276,7 @@ class Client:
                 "language": language,
                 "last_backend_uuid": (follow_up["backend_uuid"] if follow_up else None),
                 "mode": "concise" if mode == "auto" else "copilot",
-                "model_preference": {
-                    "auto": {None: "turbo"},
-                    "pro": {
-                        None: "pplx_pro",
-                        "sonar": "experimental",
-                        "gpt-5.2": "gpt52",
-                        "claude-4.5-sonnet": "claude45sonnet",
-                        "grok-4.1": "grok41nonreasoning",
-                    },
-                    "reasoning": {
-                        None: "pplx_reasoning",
-                        "gpt-5.2-thinking": "gpt52_thinking",
-                        "claude-4.5-sonnet-thinking": "claude45sonnetthinking",
-                        "gemini-3.0-pro": "gemini30pro",
-                        "kimi-k2-thinking": "kimik2thinking",
-                        "grok-4.1-reasoning": "grok41reasoning",
-                    },
-                    "deep research": {None: "pplx_alpha"},
-                }[mode][model],
+                "model_preference": MODEL_MAPPINGS[mode][model],
                 "source": "default",
                 "sources": sources,
                 "version": "2.18",

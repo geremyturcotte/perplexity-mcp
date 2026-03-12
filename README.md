@@ -55,10 +55,10 @@ Most Perplexity MCP servers are single-account wrappers around the paid Sonar AP
 - **Deep Research** — comprehensive 10-30+ citation reports
 - **Multi-source** — web, scholar, and social
 
-### 🤖 9 Models Available
-- `sonar` · `gpt-5.2` · `claude-4.5-sonnet` · `grok-4.1`
-- `gpt-5.2-thinking` · `claude-4.5-sonnet-thinking`
-- `gemini-3.0-pro` · `kimi-k2-thinking` · `grok-4.1-reasoning`
+### 🤖 15 Models Available
+- `sonar` · `gpt-5.2` · `gpt-5.4` · `claude-4.5-sonnet` · `claude-4.6-sonnet` · `grok-4.1`
+- `gpt-5.2-thinking` · `gpt-5.4-thinking` · `claude-4.5-sonnet-thinking` · `claude-4.6-sonnet-thinking`
+- `gemini-3.0-pro` · `gemini-3.1-pro` · `kimi-k2-thinking` · `kimi-k2.5-thinking` · `grok-4.1-reasoning`
 
 </td>
 <td width="50%">
@@ -170,7 +170,7 @@ Two MCP tools with LLM-optimized descriptions so your AI assistant picks the rig
 | Parameter | Type | Default | Description |
 |:----------|:-----|:--------|:------------|
 | `query` | string | *required* | Natural language question with context |
-| `model` | string | `null` | Model selection (see [models](#-9-models-available)) |
+| `model` | string | `null` | Model selection (see [models](#-15-models-available)) |
 | `sources` | array | `["web"]` | Sources: `web`, `scholar`, `social` |
 | `language` | string | `en-US` | ISO 639 language code |
 

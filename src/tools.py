@@ -10,8 +10,25 @@ Tool descriptions are optimized for LLM agents.
 
 from mcp.types import Tool
 
+from perplexity.config import MODEL_MAPPINGS
+
 # Reasoning model keywords — if model name contains these, use reasoning mode
 _REASONING_KEYWORDS = ("thinking", "reasoning")
+
+
+def _model_description() -> str:
+    """Generate model description dynamically from MODEL_MAPPINGS."""
+    all_models = sorted({
+        name
+        for models in MODEL_MAPPINGS.values()
+        for name in models
+        if name is not None
+    })
+    return (
+        f"Optional model selection. Available: {', '.join(all_models)}. "
+        "Leave empty for default. "
+        "Models with 'thinking'/'reasoning' in the name automatically use reasoning mode."
+    )
 
 
 def get_mode_for_tool(name: str, model: str = None) -> str:
@@ -61,12 +78,7 @@ TOOLS = [
                 },
                 "model": {
                     "type": "string",
-                    "description": (
-                        "Optional model selection. Available: sonar, gpt-5.2, claude-4.5-sonnet, grok-4.1, "
-                        "gpt-5.2-thinking, claude-4.5-sonnet-thinking, gemini-3.0-pro, kimi-k2-thinking, "
-                        "grok-4.1-reasoning. Leave empty for default. "
-                        "Models with 'thinking'/'reasoning' in the name automatically use reasoning mode."
-                    )
+                    "description": _model_description()
                 }
             },
             "required": ["query"]
