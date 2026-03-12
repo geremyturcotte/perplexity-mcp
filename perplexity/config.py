@@ -64,25 +64,29 @@ MODEL_MAPPINGS: Dict[str, Dict[str, str]] = {
     "pro": {
         None: "pplx_pro",
         "sonar": "experimental",
-        "gpt-5.2": "gpt52",
         "gpt-5.4": "gpt54",
-        "claude-4.5-sonnet": "claude45sonnet",
         "claude-4.6-sonnet": "claude46sonnet",
         "grok-4.1": "grok41nonreasoning",
     },
     "reasoning": {
         None: "pplx_reasoning",
-        "gpt-5.2-thinking": "gpt52_thinking",
         "gpt-5.4-thinking": "gpt54_thinking",
-        "claude-4.5-sonnet-thinking": "claude45sonnetthinking",
         "claude-4.6-sonnet-thinking": "claude46sonnetthinking",
-        "gemini-3.0-pro": "gemini30pro",
         "gemini-3.1-pro": "gemini31pro",
-        "kimi-k2-thinking": "kimik2thinking",
         "kimi-k2.5-thinking": "kimik25thinking",
         "grok-4.1-reasoning": "grok41reasoning",
     },
     "deep research": {None: "pplx_alpha"},
+}
+
+# Deprecated model aliases — old name → new replacement
+DEPRECATED_MODELS: Dict[str, str] = {
+    "gpt-5.2": "gpt-5.4",
+    "gpt-5.2-thinking": "gpt-5.4-thinking",
+    "claude-4.5-sonnet": "claude-4.6-sonnet",
+    "claude-4.5-sonnet-thinking": "claude-4.6-sonnet-thinking",
+    "gemini-3.0-pro": "gemini-3.1-pro",
+    "kimi-k2-thinking": "kimi-k2.5-thinking",
 }
 
 # HTTP Headers Template

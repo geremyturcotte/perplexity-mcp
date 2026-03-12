@@ -37,6 +37,7 @@ from .config import (
     ENDPOINT_SSE_ASK,
     ENDPOINT_UPLOAD_URL,
     MODEL_MAPPINGS,
+    DEPRECATED_MODELS,
     SOCKS_PROXY,
 )
 from .exceptions import ValidationError
@@ -196,6 +197,11 @@ class Client:
         valid_modes = ("auto", "pro", "reasoning", "deep research")
         if mode not in valid_modes:
             raise ValidationError(f"Invalid search mode '{mode}'. Choose from: {', '.join(valid_modes)}")
+
+        if model in DEPRECATED_MODELS:
+            new_model = DEPRECATED_MODELS[model]
+            print(f"⚠️  Model '{model}' is deprecated. Using '{new_model}' instead.", file=sys.stderr)
+            model = new_model
 
         valid_models = {mode: list(mapping.keys()) for mode, mapping in MODEL_MAPPINGS.items()}
         if self.own and model not in valid_models[mode]:

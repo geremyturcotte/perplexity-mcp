@@ -1,6 +1,6 @@
 [project]
 name = "perplexity-mcp"
-version = "0.5.0"
+version = "0.6.0"
 description = "Free Perplexity AI for your coding assistant. No API keys, no subscription."
 readme = "README.md"
 requires-python = ">=3.10"
