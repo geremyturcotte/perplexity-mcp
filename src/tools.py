@@ -35,9 +35,15 @@ def get_mode_for_tool(name: str, model: str = None) -> str:
     """Determine the Perplexity search mode from tool name and model."""
     if name == "perplexity_research":
         return "deep research"
-    # perplexity_ask — auto-detect reasoning mode from model name
-    if model and any(kw in model for kw in _REASONING_KEYWORDS):
+    if not model:
+        return "pro"
+    # Fast path: keyword detection for thinking/reasoning models
+    if any(kw in model for kw in _REASONING_KEYWORDS):
         return "reasoning"
+    # Fallback: find which mode actually contains this model
+    for mode_name, mapping in MODEL_MAPPINGS.items():
+        if model in mapping and mode_name != "auto":
+            return mode_name
     return "pro"
 
 
