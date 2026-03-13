@@ -10,7 +10,7 @@ Tool descriptions are optimized for LLM agents.
 
 from mcp.types import Tool
 
-from perplexity.config import COUNCIL_MODELS, MODEL_MAPPINGS
+from perplexity.config import COUNCIL_MODELS, MODEL_MAPPINGS, SEARCH_SOURCES, SOURCE_LABELS
 
 # Reasoning model keywords — if model name contains these, use reasoning mode
 _REASONING_KEYWORDS = ("thinking", "reasoning")
@@ -38,6 +38,16 @@ def _council_description() -> str:
         f"Models for council consensus (1-3). Available: {', '.join(names)}. "
         "Each model object needs 'name' and optional 'thinking' (boolean, default true). "
         "Example: [{\"name\": \"gpt-5.4\", \"thinking\": true}, {\"name\": \"claude-4.6-opus\", \"thinking\": true}, {\"name\": \"gemini-3.1-pro\"}]"
+    )
+
+
+def _sources_description() -> str:
+    """Generate sources description dynamically from config."""
+    labels = [f"{v} ({k})" for k, v in SOURCE_LABELS.items()]
+    return (
+        f"Information sources. Available: {', '.join(labels)}. "
+        "Connector sources (GitHub, Linear, Google Drive) require OAuth setup in Perplexity. "
+        "Premium sources (Wiley, CB Insights, Statista, PitchBook) require Max subscription."
     )
 
 
@@ -100,8 +110,8 @@ TOOLS = [
                 },
                 "sources": {
                     "type": "array",
-                    "items": {"type": "string", "enum": ["web", "scholar", "social"]},
-                    "description": "Information sources to search. Default: ['web']"
+                    "items": {"type": "string", "enum": SEARCH_SOURCES},
+                    "description": _sources_description()
                 },
                 "language": {
                     "type": "string",
@@ -137,8 +147,8 @@ TOOLS = [
                 },
                 "sources": {
                     "type": "array",
-                    "items": {"type": "string", "enum": ["web", "scholar", "social"]},
-                    "description": "Information sources. Default: ['web', 'scholar']"
+                    "items": {"type": "string", "enum": SEARCH_SOURCES},
+                    "description": _sources_description()
                 },
                 "language": {
                     "type": "string",
@@ -182,8 +192,8 @@ TOOLS = [
                 },
                 "sources": {
                     "type": "array",
-                    "items": {"type": "string", "enum": ["web", "scholar", "social"]},
-                    "description": "Information sources. Default: ['web']"
+                    "items": {"type": "string", "enum": SEARCH_SOURCES},
+                    "description": _sources_description()
                 },
                 "language": {
                     "type": "string",

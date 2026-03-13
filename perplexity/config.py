@@ -55,7 +55,21 @@ ENDPOINT_RATE_LIMIT_STATUS = f"{API_BASE_URL}/rest/rate-limit/status"
 
 # Search Modes
 SEARCH_MODES = ["auto", "pro", "reasoning", "deep research", "model council"]
-SEARCH_SOURCES = ["web", "scholar", "social"]
+# Source categories
+STANDARD_SOURCES = ["web", "scholar", "social"]
+CONNECTOR_SOURCES = ["github_mcp_direct", "linear_alt", "google_drive"]
+PREMIUM_SOURCES = ["wiley_mcp_cashmere", "cbinsights_mcp_cashmere", "statista_mcp_cashmere", "pitchbook_mcp_cashmere"]
+
+# All valid sources (single source of truth for validation)
+SEARCH_SOURCES = STANDARD_SOURCES + CONNECTOR_SOURCES + PREMIUM_SOURCES
+
+# Human-readable labels (for tool descriptions)
+SOURCE_LABELS = {
+    "web": "Web", "scholar": "Academic/Scholar", "social": "Social",
+    "github_mcp_direct": "GitHub", "linear_alt": "Linear", "google_drive": "Google Drive",
+    "wiley_mcp_cashmere": "Wiley", "cbinsights_mcp_cashmere": "CB Insights",
+    "statista_mcp_cashmere": "Statista", "pitchbook_mcp_cashmere": "PitchBook",
+}
 SEARCH_LANGUAGES = ["en-US", "en-GB", "pt-BR", "es-ES", "fr-FR", "de-DE", "zh-CN"]
 
 # Model Mappings

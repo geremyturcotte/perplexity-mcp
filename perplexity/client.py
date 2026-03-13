@@ -38,6 +38,7 @@ from .config import (
     ENDPOINT_UPLOAD_URL,
     MODEL_MAPPINGS,
     DEPRECATED_MODELS,
+    SEARCH_SOURCES,
     SOCKS_PROXY,
 )
 from .exceptions import ValidationError
@@ -208,8 +209,8 @@ class Client:
         if self.own and model not in valid_models[mode]:
             raise ValidationError(f"Invalid model '{model}' for mode '{mode}'.")
 
-        if not all(source in ("web", "scholar", "social") for source in sources):
-            raise ValidationError("Invalid sources. Choose from: web, scholar, social")
+        if not all(source in SEARCH_SOURCES for source in sources):
+            raise ValidationError(f"Invalid sources. Choose from: {', '.join(SEARCH_SOURCES)}")
 
         if mode in ("pro", "reasoning", "deep research", "model council") and self.copilot <= 0:
             raise ValidationError("No remaining pro queries.")
