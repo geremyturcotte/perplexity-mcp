@@ -54,7 +54,7 @@ ENDPOINT_RATE_LIMIT = f"{API_BASE_URL}/rest/rate-limit"
 ENDPOINT_RATE_LIMIT_STATUS = f"{API_BASE_URL}/rest/rate-limit/status"
 
 # Search Modes
-SEARCH_MODES = ["auto", "pro", "reasoning", "deep research"]
+SEARCH_MODES = ["auto", "pro", "reasoning", "deep research", "model council"]
 SEARCH_SOURCES = ["web", "scholar", "social"]
 SEARCH_LANGUAGES = ["en-US", "en-GB", "pt-BR", "es-ES", "fr-FR", "de-DE", "zh-CN"]
 

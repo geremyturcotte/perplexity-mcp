@@ -105,7 +105,7 @@ def validate_query_limits(
         >>> validate_query_limits(5, 10, "pro", 2)
     """
     # Check copilot queries
-    if mode in ["pro", "reasoning", "deep research"] and copilot_remaining <= 0:
+    if mode in ["pro", "reasoning", "deep research", "model council"] and copilot_remaining <= 0:
         raise ValidationError(
             f"No remaining enhanced queries for mode '{mode}'. "
             f"Create a new account or use mode='auto'."
