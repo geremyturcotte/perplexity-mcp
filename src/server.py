@@ -16,6 +16,7 @@ from mcp.server import Server
 from mcp.server.stdio import stdio_server
 from mcp.types import TextContent
 
+from perplexity.config import DEPRECATED_MODELS
 from perplexity.server.app import run_query, get_pool
 from .tools import TOOLS, get_mode_for_tool, TOOL_DEFAULT_SOURCES
 
@@ -65,6 +66,13 @@ async def call_tool(name: str, arguments: dict[str, Any]) -> list[TextContent]:
     # Extract arguments
     query = arguments.get("query", "")
     model = arguments.get("model")
+
+    # Redirect deprecated model names before mode detection
+    if model and model in DEPRECATED_MODELS:
+        new_model = DEPRECATED_MODELS[model]
+        logger.warning(f"Model '{model}' is deprecated, redirecting to '{new_model}'")
+        model = new_model
+
     mode = get_mode_for_tool(name, model)
     sources = arguments.get("sources") or TOOL_DEFAULT_SOURCES.get(name, ["web"])
     language = arguments.get("language", "en-US")
