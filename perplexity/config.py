@@ -79,6 +79,18 @@ MODEL_MAPPINGS: Dict[str, Dict[str, str]] = {
         "grok-4.1-reasoning": "grok41reasoning",
     },
     "deep research": {None: "pplx_alpha"},
+    "model council": {None: "pplx_agentic_research"},
+}
+
+# Model Council — maps friendly names to internal thinking/non-thinking variants
+# Used by compare_model_preferences parameter (max 3 models)
+COUNCIL_MODELS: Dict[str, Dict[str, str]] = {
+    "sonar": {"default": "experimental", "thinking": "experimental"},
+    "gpt-5.4": {"default": "gpt54", "thinking": "gpt54_thinking"},
+    "claude-4.6-sonnet": {"default": "claude46sonnet", "thinking": "claude46sonnetthinking"},
+    "claude-4.6-opus": {"default": "claude46opus", "thinking": "claude46opusthinking"},
+    "gemini-3.1-pro": {"default": "gemini31pro_high", "thinking": "gemini31pro_high"},
+    "nemotron-3-super": {"default": "nv_nemotron_3_super", "thinking": "nv_nemotron_3_super"},
 }
 
 # Deprecated model aliases — old name → new replacement

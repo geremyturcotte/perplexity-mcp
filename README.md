@@ -53,6 +53,7 @@ Most Perplexity MCP servers are single-account wrappers around the paid Sonar AP
 - **Pro Search** — fast, accurate answers with citations
 - **Reasoning** — multi-model thinking for complex decisions
 - **Deep Research** — comprehensive 10-30+ citation reports
+- **Model Council** — consensus from up to 3 models (with thinking toggle)
 - **Multi-source** — web, scholar, and social
 
 ### 🤖 11 Models Available

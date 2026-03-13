@@ -18,7 +18,7 @@ from mcp.types import TextContent
 
 from perplexity.config import DEPRECATED_MODELS
 from perplexity.server.app import run_query, get_pool
-from .tools import TOOLS, get_mode_for_tool, TOOL_DEFAULT_SOURCES
+from .tools import TOOLS, get_mode_for_tool, resolve_council_models, TOOL_DEFAULT_SOURCES
 
 # Configuration from environment
 TIMEOUT_SECONDS = int(os.getenv("PERPLEXITY_TIMEOUT", "900"))  # 15 min default for research
@@ -77,6 +77,14 @@ async def call_tool(name: str, arguments: dict[str, Any]) -> list[TextContent]:
     sources = arguments.get("sources") or TOOL_DEFAULT_SOURCES.get(name, ["web"])
     language = arguments.get("language", "en-US")
 
+    # Resolve council model selections for model council mode
+    council_models = None
+    if name == "perplexity_council":
+        models_input = arguments.get("models", [])
+        council_models = resolve_council_models(models_input)
+        if not council_models:
+            return [TextContent(type="text", text="Error: No valid council models provided.")]
+
     # Sync shared pool state before query (MCP is read-only, HTTP server owns config)
     pool = get_pool(config_writable=False)
     pool.reload_config()  # Pick up tokens added/removed via web UI
@@ -103,6 +111,7 @@ async def call_tool(name: str, arguments: dict[str, Any]) -> list[TextContent]:
                     sources=sources,
                     language=language,
                     fallback_to_auto=True,
+                    council_models=council_models,
                 )
             ),
             timeout=TIMEOUT_SECONDS

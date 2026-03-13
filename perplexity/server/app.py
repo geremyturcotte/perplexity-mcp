@@ -123,6 +123,7 @@ def run_query(
     incognito: bool = False,
     files: Optional[Union[Dict[str, Any], Iterable[str]]] = None,
     fallback_to_auto: bool = True,
+    council_models: Optional[List[str]] = None,
 ) -> Dict[str, Any]:
     """
     Execute a Perplexity query with client pool rotation and optional fallback.
@@ -163,7 +164,7 @@ def run_query(
 
     # --- 2. Check if fallback to auto is enabled ---
     should_fallback = fallback_to_auto and pool.is_fallback_to_auto_enabled()
-    is_pro_mode = mode in ("pro", "reasoning", "deep research")
+    is_pro_mode = mode in ("pro", "reasoning", "deep research", "model council")
 
     logger.debug(f"Starting query: mode={mode}, model={model}, fallback_enabled={should_fallback}, is_pro_mode={is_pro_mode}")
 
@@ -208,6 +209,7 @@ def run_query(
                 stream=False,
                 language=language,
                 incognito=incognito,
+                council_models=council_models,
             )
 
             if response is None:

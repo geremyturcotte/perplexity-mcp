@@ -173,13 +173,14 @@ class Client:
         language="en-US",
         follow_up=None,
         incognito=False,
+        council_models=None,
     ):
         """
         Executes a search query on Perplexity AI.
 
         Parameters:
         - query: The search query string.
-        - mode: Search mode ('auto', 'pro', 'reasoning', 'deep research').
+        - mode: Search mode ('auto', 'pro', 'reasoning', 'deep research', 'model council').
         - model: Specific model to use for the query.
         - sources: List of sources ('web', 'scholar', 'social').
         - files: Dictionary of files to upload.
@@ -194,7 +195,7 @@ class Client:
             files = {}
 
         # Validate input parameters
-        valid_modes = ("auto", "pro", "reasoning", "deep research")
+        valid_modes = ("auto", "pro", "reasoning", "deep research", "model council")
         if mode not in valid_modes:
             raise ValidationError(f"Invalid search mode '{mode}'. Choose from: {', '.join(valid_modes)}")
 
@@ -210,7 +211,7 @@ class Client:
         if not all(source in ("web", "scholar", "social") for source in sources):
             raise ValidationError("Invalid sources. Choose from: web, scholar, social")
 
-        if mode in ("pro", "reasoning", "deep research") and self.copilot <= 0:
+        if mode in ("pro", "reasoning", "deep research", "model council") and self.copilot <= 0:
             raise ValidationError("No remaining pro queries.")
 
         if files and self.file_upload - len(files) < 0:
@@ -288,6 +289,10 @@ class Client:
                 "version": "2.18",
             },
         }
+
+        # Add council model selections for model council mode
+        if council_models and mode == "model council":
+            json_data["params"]["compare_model_preferences"] = council_models
 
         # Send the query request and handle the response
         resp = self.session.post(ENDPOINT_SSE_ASK, json=json_data, stream=True, timeout=120)
